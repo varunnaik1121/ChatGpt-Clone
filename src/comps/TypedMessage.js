@@ -21,7 +21,7 @@ const TypedMessage = ({ text, index, messagesLength, contRef }) => {
   }, [text, idx]);
 
   return (
-    <div className="py-2 " ref={index === messagesLength - 1 ? divRef : null}>
+    <div className="  p-0" ref={index === messagesLength - 1 ? divRef : null}>
       {index === messagesLength - 1 ? (
         <div>
           <div className=" w-[100%] max-w-[1280px]  whitespace-pre-wrap flex-1 flex ">
