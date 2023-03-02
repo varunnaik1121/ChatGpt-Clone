@@ -26,8 +26,12 @@ const TypedMessage = ({ text, index, messagesLength, contRef }) => {
         <div>
           <div className=" w-[100%] max-w-[1280px]  whitespace-pre-wrap flex-1 flex ">
             <div className="relative pl-4 pr-2 max-w-[100%] ">
-              {typedText.split().map((word) => {
-                return <span className="leading-7">{word}</span>;
+              {typedText.split().map((word, idx) => {
+                return (
+                  <span className="leading-7" key={idx}>
+                    {word}
+                  </span>
+                );
               })}
               {idx < text.length && (
                 <span className="absolute translate-y-[50%] w-[6px] h-[15px] bg-white animate-pulse duration-550 mx-1"></span>

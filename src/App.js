@@ -14,51 +14,50 @@ function App() {
     containerRef.current.scrollTop = containerRef.current.scrollHeight;
   }, [messages]);
 
-  useEffect(() => {
-    containerRef.current.scrollWidth = 0;
-  }, []);
-
   const handleSubmit = async () => {
-    setMessages([
-      ...messages,
-      { userMessage: userInput, botMessage: null, loading: true },
-    ]);
+    if (userInput) {
+      setMessages([
+        ...messages,
+        { userMessage: userInput, botMessage: null, loading: true },
+      ]);
 
-    try {
-      setLoading(true);
-      const data = await axios.post('http://localhost:5000/', { userInput });
-      const botResponse = data?.data?.bot.toString().trim() || '';
-      let copiedArr = [...messages];
-      console.log({ copiedArr });
-      let lastObject = copiedArr[copiedArr.length - 1];
+      try {
+        setLoading(true);
+        const data = await axios.post('http://localhost:5000/', { userInput });
+        setUserInput('');
+        const botResponse = data?.data?.bot.toString().trim() || '';
+        let copiedArr = [...messages];
 
-      let updatedObject = {
-        ...lastObject,
-        userMessage: userInput,
-        botMessage: botResponse,
-        loading: false,
-      };
-      copiedArr[copiedArr.length] = updatedObject;
-      console.log(copiedArr);
-      setLoading(false);
-      setMessages(copiedArr);
-    } catch (err) {
-      setLoading(true);
-      console.log(err);
+        let lastObject = copiedArr[copiedArr.length - 1];
+
+        let updatedObject = {
+          ...lastObject,
+          userMessage: userInput,
+          botMessage: botResponse,
+          loading: false,
+        };
+        copiedArr[copiedArr.length] = updatedObject;
+
+        setMessages(copiedArr);
+        setLoading(false);
+      } catch (err) {
+        setLoading(true);
+      }
+    } else {
+      alert('there is nothing to show');
     }
   };
 
   return (
-    <div className="w-[100vw] bg-[#343541] overflow-x-hidden text-[#D9D9E2] h-[100vh] flex justify-center">
+    <div className="w-[100vw] bg-[#343541] overflow-x-hidden text-[#D9D9E2] h-[100vh] flex justify-center ">
       <div
         className="w-full xl:w-[60%] bg-transparent 
       "
       >
         <div className="w-full h-full mb-8 flex flex-col justify-between scroll-smooth">
           <div
-            className="pb-4  overflow-y-scroll scroll-smooth "
+            className="pb-4  overflow-y-auto  scroll-smooth "
             ref={containerRef}
-            id="scrollbar"
           >
             <Navbar title={'Model summarizes conversation'} />
             {messages.map((message, index) => {
@@ -78,6 +77,7 @@ function App() {
             setUserInput={setUserInput}
             userInput={userInput}
             handleSubmit={handleSubmit}
+            loading={loading}
           />
         </div>
       </div>
