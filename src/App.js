@@ -23,7 +23,7 @@ function App() {
 
       try {
         setLoading(true);
-        const data = await axios.post('http://localhost:5000/', { userInput });
+        const data = await axios.post('https://varunnaik-chatgpt.onrender.com', { userInput });
         setUserInput('');
         const botResponse = data?.data?.bot.toString().trim() || '';
         let copiedArr = [...messages];
@@ -44,7 +44,8 @@ function App() {
         setLoading(true);
       }
     } else {
-      alert('there is nothing to show');
+      alert('You should type something to answer🤨');
+      return;
     }
   };
 

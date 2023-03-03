@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import userAvatar from '../assets/userAvatar.jpeg';
 import chatgpt from '../assets/chatgpt.png';
 import TypedText from './TypedMessage';
